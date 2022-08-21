@@ -29,9 +29,9 @@ public class AnggotaReq {
         this.namaAnggota = anggota.getNamaAnggota();
         this.nik = anggota.getNik();
         this.tempatLahir = anggota.getTempatLahir();
-        this.tanggalLahir = new SimpleDateFormat("yyyy-mm-dd hh:mm:ss").format(anggota.getTanggalLahir());
+        this.tanggalLahir = new SimpleDateFormat("yyyy-MM-dd hh:mm:ss").format(anggota.getTanggalLahir());
         this.alamat = anggota.getAlamat();
-        this.createdAt = new SimpleDateFormat("yyyy-mm-dd hh:mm:ss").format(anggota.getCreatedAt());
+        this.createdAt = new SimpleDateFormat("yyyy-MM-dd hh:mm:ss").format(anggota.getCreatedAt());
         this.status = anggota.getStatus();
     }
 

@@ -4,11 +4,15 @@ import java.io.Serializable;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.Date;
+import java.util.List;
+
+import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.OneToMany;
 import javax.persistence.Table;
 
 import com.example.demo.dto.AnggotaReq;
@@ -35,7 +39,9 @@ public class Anggota implements Serializable{
     private Date createdAt;
     @Column(name = "status", columnDefinition = "INT")
     private int status;
-
+    @OneToMany(cascade = CascadeType.PERSIST, mappedBy = "nikAnggota")
+    private List<Transaksi> tList;
+    
     public Anggota(){}
     
     public Anggota(AnggotaReq anggotaReq){
@@ -111,6 +117,15 @@ public class Anggota implements Serializable{
     public void setStatus(int status) {
         this.status = status;
     }
+
+    public List<Transaksi> getTList() {
+        return this.tList;
+    }
+
+    public void setTList(List<Transaksi> tList) {
+        this.tList = tList;
+    }
+
 
     private Date parsingDate(String dateString){
         Date tanggalLahir = new Date();

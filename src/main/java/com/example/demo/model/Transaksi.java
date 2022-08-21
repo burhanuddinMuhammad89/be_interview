@@ -2,11 +2,15 @@ package com.example.demo.model;
 
 import java.math.BigDecimal;
 import java.util.Date;
+import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
+import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.JoinColumn;
+import javax.persistence.ManyToOne;
 import javax.persistence.Table;
 import com.example.demo.dto.TransaksiReq;
 
@@ -25,8 +29,9 @@ public class Transaksi {
     private String action;
     @Column(name = "createdAt", columnDefinition = "TIMESTAMP")
     private Date createdAt;
-    @Column(name = "nik_anggota", columnDefinition = "varchar(17)")
-    private String nikAnggota;
+    @ManyToOne(cascade = CascadeType.ALL, fetch=FetchType.LAZY)
+    @JoinColumn(name = "nik_anggota", referencedColumnName = "nik")
+    private Anggota nikAnggota;
 
     public Transaksi(){}
 
@@ -35,7 +40,6 @@ public class Transaksi {
         this.amount = new BigDecimal(transaksiReq.getAmount()).abs();
         this.action = transaksiReq.getAction();
         this.createdAt = new Date();
-        this.nikAnggota = transaksiReq.getAnggotaReq().getNik();
     }
     
     public long getId() {
@@ -78,12 +82,13 @@ public class Transaksi {
         this.createdAt = createdAt;
     }
 
-    public String getNikAnggota() {
+    public Anggota getNikAnggota() {
         return this.nikAnggota;
     }
 
-    public void setNikAnggota(String nikAnggota) {
+    public void setNikAnggota(Anggota nikAnggota) {
         this.nikAnggota = nikAnggota;
     }
+
 
 }

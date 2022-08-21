@@ -61,6 +61,7 @@ public class TransaksiServiceImpl implements TransaksiService {
                     + this.getDateHourNow().get("second");
             transaksiReq.setNoTrans(transactionNo);
             Transaksi transaksi = new Transaksi(transaksiReq);
+            transaksi.setNikAnggota(anggota);
             transaksiRepository.save(transaksi);
         } catch (Exception e) {
             return "error-" + e.getMessage();
@@ -88,7 +89,7 @@ public class TransaksiServiceImpl implements TransaksiService {
     private List<TransaksiReq> getListTransactionForReq(List<Transaksi> transaksis) {
         List<TransaksiReq> transaksiReqs = new ArrayList<>();
         for (Transaksi transaksi : transaksis) {
-            Anggota anggota = anggotaRepository.findByNik(transaksi.getNikAnggota());
+            Anggota anggota = transaksi.getNikAnggota();
             AnggotaReq anggotaReq = new AnggotaReq(anggota);
             TransaksiReq transaksiReq = new TransaksiReq(transaksi);
             transaksiReq.setAnggotaReq(anggotaReq);
