@@ -7,6 +7,7 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
@@ -45,6 +46,13 @@ public class AnggotaController {
 
     @PostMapping
     public ResponseEntity<String> createAnggota(@Validated @RequestBody AnggotaReq anggotaReq) {
+        String anggotaReqResult = anggotaService.createAnggota(anggotaReq);
+        return anggotaReqResult.contains("error") ? ResponseEntity.badRequest().body(anggotaReqResult)
+                : ResponseEntity.ok().body(anggotaReqResult);
+    }
+
+    @PutMapping
+    public ResponseEntity<String> updateAnggota(@Validated @RequestBody AnggotaReq anggotaReq) {
         String anggotaReqResult = anggotaService.createAnggota(anggotaReq);
         return anggotaReqResult.contains("error") ? ResponseEntity.badRequest().body(anggotaReqResult)
                 : ResponseEntity.ok().body(anggotaReqResult);

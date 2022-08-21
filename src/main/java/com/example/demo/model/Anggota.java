@@ -117,7 +117,7 @@ public class Anggota implements Serializable{
         try {
             tanggalLahir = new SimpleDateFormat("dd/MM/yyyy").parse(dateString);
         } catch (ParseException e) {
-            tanggalLahir = null;
+            e.printStackTrace();
         }
         return tanggalLahir;
     }

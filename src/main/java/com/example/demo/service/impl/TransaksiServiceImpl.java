@@ -10,6 +10,8 @@ import java.util.Date;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+
+import org.apache.commons.lang3.StringUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -33,10 +35,23 @@ public class TransaksiServiceImpl implements TransaksiService {
     @Override
     public String createTransaction(TransaksiReq transaksiReq) {
         try {
+            if(!isNumeric(transaksiReq.getAmount())){
+                return "error-amount wajib diisi angka";
+            }
+
+            if(StringUtils.isEmpty(transaksiReq.getAmount())){
+                return "error-amount wajib diisi";
+            }
+
+            if(transaksiReq.getAmount().contains("-")){
+                return "error-amount tidak boleh minus";
+            }
+
             Anggota anggota = anggotaRepository.findByNik(transaksiReq.getAnggotaReq().getNik());
             if (anggota == null) {
                 return "error-anggota belum bergabung mohon melakukan pendaftaran terlebih dahulu";
             }
+            
             String transactionNo = transaksiReq.getAnggotaReq().getNik().substring(
                     transaksiReq.getAnggotaReq().getNik().length() - 3,
                     transaksiReq.getAnggotaReq().getNik().length())
@@ -116,6 +131,18 @@ public class TransaksiServiceImpl implements TransaksiService {
         calendar.set(Calendar.MINUTE, minutes);
         calendar.set(Calendar.SECOND, second);
         return calendar.getTime();
+    }
+
+    public static boolean isNumeric(String strNum) {
+        if (strNum == null) {
+            return false;
+        }
+        try {
+            double d = Double.parseDouble(strNum);
+        } catch (NumberFormatException nfe) {
+            return false;
+        }
+        return true;
     }
 
 }

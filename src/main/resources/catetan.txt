@@ -1,0 +1,12 @@
+// scenario negative test
+
+//negative case create anggota
+    // - hit dengan mengganakan format tgl lahir yang salah
+    // - hit dengan field nik yang kosong
+    // - hit dengan nama kurang dari 3 huruf
+
+//negative case create transaksi
+    // - hit dengan menggunakan nik yang belum terdaftar jadi anggota
+    // - hit dengan amount yang kosong
+    // - hit dengan amount field bukan angka
+    // - hit dengan amount dengan minus    

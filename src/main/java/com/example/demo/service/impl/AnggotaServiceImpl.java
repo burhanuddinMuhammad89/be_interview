@@ -26,7 +26,10 @@ public class AnggotaServiceImpl implements AnggotaService{
         try {
             Anggota anggota = anggotaRepository.findByNik(anggotaReq.getNik());
             if (anggota != null) {
-                return "error-anggota sudah ada";
+                Anggota anggotaUpdate = new Anggota(anggotaReq);
+                anggotaUpdate.setId(anggota.getId());
+                anggotaRepository.save(anggotaUpdate);
+                return "success update data";
             }
 
             if (StringUtils.isEmpty(anggotaReq.getNik())) {
