@@ -49,7 +49,7 @@ public class TransaksiServiceImpl implements TransaksiService {
 
             Anggota anggota = anggotaRepository.findByNik(transaksiReq.getAnggotaReq().getNik());
             if (anggota == null) {
-                return "error-anggota belum bergabung mohon melakukan pendaftaran terlebih dahulu";
+                return "error-nik belum bergabung mohon melakukan pendaftaran terlebih dahulu";
             }
             
             String transactionNo = transaksiReq.getAnggotaReq().getNik().substring(
