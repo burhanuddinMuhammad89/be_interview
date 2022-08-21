@@ -36,11 +36,11 @@ public class AnggotaServiceImpl implements AnggotaService{
             if (anggotaReq.getNamaAnggota().length() < 3) {
                 return "error-nama tidak boleh kurang dari atau sama dengan 3 huruf";
             }
-            
+
             anggota = new Anggota(anggotaReq);
 
             if (anggota.getTanggalLahir() == null) {
-                return "error-format tanggal lahir salah harus (dd/MM/yyyy)";
+                return "error-format tanggal lahir salah, seharusnya (dd/MM/yyyy)";
             }
 
             anggotaRepository.save(anggota);
