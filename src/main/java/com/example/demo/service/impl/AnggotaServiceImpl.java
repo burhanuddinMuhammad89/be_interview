@@ -4,6 +4,7 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.logging.Logger;
 
+import org.apache.commons.lang3.StringUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -22,15 +23,29 @@ public class AnggotaServiceImpl implements AnggotaService{
 
     @Override
     public String createAnggota(AnggotaReq anggotaReq) {
-        try{
+        try {
             Anggota anggota = anggotaRepository.findByNik(anggotaReq.getNik());
-            if(anggota != null){
+            if (anggota != null) {
                 return "error-anggota sudah ada";
             }
+
+            if (StringUtils.isEmpty(anggotaReq.getNik())) {
+                return "error-nik wajib diisi";
+            }
+
+            if (anggotaReq.getNamaAnggota().length() < 3) {
+                return "error-nama tidak boleh kurang dari atau sama dengan 3 huruf";
+            }
+            
             anggota = new Anggota(anggotaReq);
+
+            if (anggota.getTanggalLahir() == null) {
+                return "error-format tanggal lahir salah harus (dd/MM/yyyy)";
+            }
+
             anggotaRepository.save(anggota);
-        }catch(Exception e){
-            return "error-"+e.getMessage();
+        } catch (Exception e) {
+            return "error-" + e.getMessage();
         }
         return "success menambah data";
     }
