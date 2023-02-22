@@ -1,4 +1,5 @@
 package com.example.demo.controller;
+
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -19,7 +20,7 @@ import com.example.demo.service.TransaksiService;
 @RestController
 @RequestMapping("/api/anggota")
 public class AnggotaController {
-    
+
     @Autowired
     private AnggotaService anggotaService;
 
@@ -34,7 +35,7 @@ public class AnggotaController {
         return anggotaService.getAllAnggota();
     }
 
-    @GetMapping("/nik")
+    @GetMapping("/getNik")
     public List<AnggotaReq> findAnggotaByNik(@Param(value = "nik") String nik) {
         return anggotaService.getAnggotaByNik(nik);
     }
@@ -66,8 +67,9 @@ public class AnggotaController {
     }
 
     @GetMapping("/transaksi")
-    public List<TransaksiReq> findTransaksiByDate(@Param(value = "dateStart") String dateStart,@Param(value = "dateEnd") String dateEnd) {
-        return transaksiService.getTransactionByDate(dateStart,dateEnd);
+    public List<TransaksiReq> findTransaksiByDate(@Param(value = "dateStart") String dateStart,
+            @Param(value = "dateEnd") String dateEnd) {
+        return transaksiService.getTransactionByDate(dateStart, dateEnd);
     }
 
     @GetMapping("/transaksi/byNik")

@@ -4,22 +4,20 @@ import java.io.Serializable;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.Date;
+import java.util.HashSet;
 import java.util.List;
+import java.util.Set;
 
-import javax.persistence.CascadeType;
-import javax.persistence.Column;
-import javax.persistence.Entity;
-import javax.persistence.GeneratedValue;
-import javax.persistence.GenerationType;
-import javax.persistence.Id;
-import javax.persistence.OneToMany;
-import javax.persistence.Table;
+import javax.persistence.*;
+import javax.validation.constraints.Email;
+import javax.validation.constraints.NotBlank;
+import javax.validation.constraints.Size;
 
 import com.example.demo.dto.AnggotaReq;
 
 @Entity
 @Table(name = "anggota")
-public class Anggota implements Serializable{
+public class Anggota implements Serializable {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -39,12 +37,32 @@ public class Anggota implements Serializable{
     private Date createdAt;
     @Column(name = "status", columnDefinition = "INT")
     private int status;
+    @NotBlank
+    @Size(max = 20)
+    @Column(name = "user_name", columnDefinition = "VARCHAR(50)")
+    private String username;
+    @NotBlank
+    @Size(max = 50)
+    @Email
+    @Column(name = "email", columnDefinition = "VARCHAR(50)")
+    private String email;
+    @NotBlank
+    @Size(max = 120)
+    @Column(name = "password", columnDefinition = "VARCHAR(250)")
+    private String password;
     @OneToMany(cascade = CascadeType.PERSIST, mappedBy = "nikAnggota")
     private List<Transaksi> tList;
-    
-    public Anggota(){}
-    
-    public Anggota(AnggotaReq anggotaReq){
+    @ManyToMany(fetch = FetchType.LAZY)
+    @JoinTable(name = "user_roles", joinColumns = @JoinColumn(name = "user_id"), inverseJoinColumns = @JoinColumn(name = "role_id"))
+    private Set<Role> roles = new HashSet<>();
+
+    public Anggota() {
+    }
+
+    public Anggota(AnggotaReq anggotaReq) {
+        this.username =  anggotaReq.getUsername();
+        this.email =  anggotaReq.getEmail();
+        this.password = anggotaReq.getPassword();
         this.namaAnggota = anggotaReq.getNamaAnggota();
         this.nik = anggotaReq.getNik();
         this.tempatLahir = anggotaReq.getTempatLahir();
@@ -126,8 +144,40 @@ public class Anggota implements Serializable{
         this.tList = tList;
     }
 
+    public String getUsername() {
+        return this.username;
+    }
 
-    private Date parsingDate(String dateString){
+    public void setUsername(String username) {
+        this.username = username;
+    }
+
+    public String getEmail() {
+        return this.email;
+    }
+
+    public void setEmail(String email) {
+        this.email = email;
+    }
+
+    public String getPassword() {
+        return this.password;
+    }
+
+    public void setPassword(String password) {
+        this.password = password;
+    }
+
+    public Set<Role> getRoles() {
+        return this.roles;
+    }
+
+    public void setRoles(Set<Role> roles) {
+        this.roles = roles;
+    }
+
+
+    private Date parsingDate(String dateString) {
         Date tanggalLahir = new Date();
         try {
             tanggalLahir = new SimpleDateFormat("dd/MM/yyyy").parse(dateString);
