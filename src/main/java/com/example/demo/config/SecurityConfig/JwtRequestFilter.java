@@ -1,8 +1,5 @@
 package com.example.demo.config.SecurityConfig;
 
-
-import io.jsonwebtoken.ExpiredJwtException;
-
 import java.io.IOException;
 
 import javax.servlet.FilterChain;
