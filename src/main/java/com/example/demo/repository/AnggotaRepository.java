@@ -9,6 +9,7 @@ import com.example.demo.model.Anggota;
 public interface AnggotaRepository extends CrudRepository<Anggota, Long>{
     List<Anggota> findByNikContaining(String nik);    
     List<Anggota> findBynamaAnggotaContaining(String name);
+    List<Anggota> findByEmail(String email);
     Anggota findByNik(String nik);
 
 }

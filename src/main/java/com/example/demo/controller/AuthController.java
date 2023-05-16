@@ -27,6 +27,7 @@ import com.example.demo.dto.MessageResponse;
 import com.example.demo.model.Anggota;
 import com.example.demo.model.Role;
 import com.example.demo.model.Enum.ERole;
+import com.example.demo.repository.AnggotaRepository;
 import com.example.demo.repository.RoleRepository;
 import com.example.demo.repository.UserRepository;
 import com.example.demo.service.impl.UserDetailsImpl;
@@ -40,7 +41,7 @@ public class AuthController {
   AuthenticationManager authenticationManager;
 
   @Autowired
-  UserRepository userRepository;
+  AnggotaRepository userRepository;
 
   @Autowired
   RoleRepository roleRepository;
@@ -74,13 +75,13 @@ public class AuthController {
 
   @PostMapping("/signup")
   public ResponseEntity<?> registerUser(@Valid @RequestBody AnggotaReq signUpRequest) {
-    if (userRepository.existsByUsername(signUpRequest.getUsername())) {
+    if (userRepository.findBynamaAnggotaContaining(signUpRequest.getUsername()).size() > 0) {
       return ResponseEntity
           .badRequest()
           .body(new MessageResponse("Error: Username is already taken!"));
     }
 
-    if (userRepository.existsByEmail(signUpRequest.getEmail())) {
+    if (userRepository.findByEmail(signUpRequest.getEmail()).size() > 0) {
       return ResponseEntity
           .badRequest()
           .body(new MessageResponse("Error: Email is already in use!"));
