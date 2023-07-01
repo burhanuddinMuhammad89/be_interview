@@ -4,9 +4,7 @@ import java.io.Serializable;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.Date;
-import java.util.HashSet;
 import java.util.List;
-import java.util.Set;
 
 import javax.persistence.*;
 import javax.validation.constraints.Email;
@@ -180,7 +178,7 @@ public class Anggota implements Serializable {
     private Date parsingDate(String dateString) {
         Date tanggalLahir = new Date();
         try {
-            tanggalLahir = new SimpleDateFormat("dd/MM/yyyy").parse(dateString);
+            tanggalLahir = new SimpleDateFormat("yyyy-MM-dd").parse(dateString);
         } catch (ParseException e) {
             e.printStackTrace();
         }

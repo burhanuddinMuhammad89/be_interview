@@ -1,5 +1,7 @@
 package com.example.demo.model;
 
+import java.util.List;
+
 import javax.persistence.*;
 
 import com.example.demo.model.Enum.ERole;
@@ -17,6 +19,9 @@ public class Role {
 
   @Column(length = 20)
   private Integer roleId;
+
+  @OneToMany(cascade = CascadeType.PERSIST, mappedBy = "role")
+  private List<Anggota> anggotaList;
 
   public Role() {
 
