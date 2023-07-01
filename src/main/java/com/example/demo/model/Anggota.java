@@ -49,6 +49,7 @@ public class Anggota implements Serializable {
     @Column(name = "password", columnDefinition = "VARCHAR(250)")
     private String password;
     @OneToMany(cascade = CascadeType.PERSIST, mappedBy = "nikAnggota")
+    @OrderBy("createdAt DESC")
     private List<Transaksi> tList;
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name="ROLE_ID")
