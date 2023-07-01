@@ -96,7 +96,7 @@ public class AuthController {
     if (strRoles == null) {
       Role userRole = roleRepository.findByName(ERole.ROLE_USER)
           .orElseThrow(() -> new RuntimeException(ConstantMessage.ROLE_NOT_FOUND));
-      role.setRoleId(userRole.getRoleId());
+      user.setRole(userRole);
     } else {
       strRoles.forEach(roleUser -> {
         switch (roleUser) {

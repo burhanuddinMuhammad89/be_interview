@@ -19,7 +19,6 @@ public class EroServiceImpl implements EroService {
 
   @Override
   public List<EroWebReq> getListData() {
-    // TODO Auto-generated method stub
     List<EroWeb> eroWebs = (List<EroWeb>) eroWebRepository.findAll();
     List<EroWebReq> eroWebReqs = new ArrayList<>();
     for(EroWeb eroWeb : eroWebs){
@@ -36,7 +35,6 @@ public class EroServiceImpl implements EroService {
 
   @Override
   public void createData(EroWebReq eroWebReq) {
-    // TODO Auto-generated method stub
     throw new UnsupportedOperationException(
       "Unimplemented method 'createData'"
     );
@@ -44,7 +42,6 @@ public class EroServiceImpl implements EroService {
 
   @Override
   public void batchCreateData() {
-    // TODO Auto-generated method stub
     try {
       File folder = new File(
         "/Users/admin/Documents/react/react1/my-second-web-react/public/images"

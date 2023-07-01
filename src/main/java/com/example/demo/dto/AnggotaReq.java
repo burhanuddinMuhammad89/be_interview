@@ -8,6 +8,7 @@ import javax.validation.constraints.NotBlank;
 import javax.validation.constraints.Size;
 
 import com.example.demo.model.Anggota;
+import com.fasterxml.jackson.annotation.JsonFormat;
 import com.fasterxml.jackson.annotation.JsonProperty;
 
 public class AnggotaReq {
@@ -17,6 +18,7 @@ public class AnggotaReq {
     @JsonProperty("nik")
     private String nik;
     @JsonProperty("tempatLahir")
+    @JsonFormat(shape=JsonFormat.Shape.STRING, pattern="yyyy-MM-dd")
     private String tempatLahir;
     @JsonProperty("tanggalLahir")
     private String tanggalLahir;
