@@ -15,6 +15,9 @@ public class Role {
   @Column(length = 20)
   private ERole name;
 
+  @Column(length = 20)
+  private Integer roleId;
+
   public Role() {
 
   }
@@ -38,4 +41,13 @@ public class Role {
   public void setName(ERole name) {
     this.name = name;
   }
+
+  public Integer getRoleId() {
+    return this.roleId;
+  }
+
+  public void setRoleId(Integer roleId) {
+    this.roleId = roleId;
+  }
+
 }

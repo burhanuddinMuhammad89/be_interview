@@ -52,9 +52,9 @@ public class Anggota implements Serializable {
     private String password;
     @OneToMany(cascade = CascadeType.PERSIST, mappedBy = "nikAnggota")
     private List<Transaksi> tList;
-    @ManyToMany(fetch = FetchType.LAZY)
-    @JoinTable(name = "user_roles", joinColumns = @JoinColumn(name = "user_id"), inverseJoinColumns = @JoinColumn(name = "role_id"))
-    private Set<Role> roles = new HashSet<>();
+    @ManyToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name="ROLE_ID")
+    private Role role;
 
     public Anggota() {
     }
@@ -168,12 +168,12 @@ public class Anggota implements Serializable {
         this.password = password;
     }
 
-    public Set<Role> getRoles() {
-        return this.roles;
+    public Role getRole() {
+        return this.role;
     }
 
-    public void setRoles(Set<Role> roles) {
-        this.roles = roles;
+    public void setRole(Role role) {
+        this.role = role;
     }
 
 
