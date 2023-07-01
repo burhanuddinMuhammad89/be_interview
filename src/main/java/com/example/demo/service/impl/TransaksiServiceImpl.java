@@ -35,15 +35,15 @@ public class TransaksiServiceImpl implements TransaksiService {
     @Override
     public String createTransaction(TransaksiReq transaksiReq) {
         try {
-            if(!isNumeric(transaksiReq.getAmount())){
+            if (!isNumeric(transaksiReq.getAmount())) {
                 return "error-amount wajib diisi angka";
             }
 
-            if(StringUtils.isEmpty(transaksiReq.getAmount())){
+            if (StringUtils.isEmpty(transaksiReq.getAmount())) {
                 return "error-amount wajib diisi";
             }
 
-            if(transaksiReq.getAmount().contains("-")){
+            if (transaksiReq.getAmount().contains("-")) {
                 return "error-amount tidak boleh minus";
             }
 
@@ -51,7 +51,7 @@ public class TransaksiServiceImpl implements TransaksiService {
             if (anggota == null) {
                 return "error-nik belum bergabung mohon melakukan pendaftaran terlebih dahulu";
             }
-            
+
             String transactionNo = transaksiReq.getAnggotaReq().getNik().substring(
                     transaksiReq.getAnggotaReq().getNik().length() - 3,
                     transaksiReq.getAnggotaReq().getNik().length())
@@ -71,31 +71,29 @@ public class TransaksiServiceImpl implements TransaksiService {
 
     @Override
     public List<TransaksiReq> getAllTransaction() {
-        return getListTransactionForReq((List<Transaksi>) transaksiRepository.findAll());
+        List<TransaksiReq> transaksiReqs = new ArrayList<>();
+        return transaksiReqs;
     }
 
     @Override
     public List<TransaksiReq> getTransactionByDate(String dateBefore, String dateAfter) {
         Date dateStart = this.convertStringToDate(dateBefore, 0, 0, 0);
         Date dateEnd = this.convertStringToDate(dateAfter, 23, 59, 59);
-        return getListTransactionForReq(transaksiRepository.findBycreatedAtBetween(dateStart, dateEnd));
+        // return getListTransactionForReq(transaksiRepository.findBycreatedAtBetween(dateStart, dateEnd));
+        List<TransaksiReq> transaksiReqs = new ArrayList<>();
+        return transaksiReqs;
     }
 
     @Override
     public List<TransaksiReq> getTransactionByAnggotaNik(String nik) {
-        return getListTransactionForReq(transaksiRepository.findBynikAnggota(nik));
-    }
-
-    private List<TransaksiReq> getListTransactionForReq(List<Transaksi> transaksis) {
-        List<TransaksiReq> transaksiReqs = new ArrayList<>();
-        for (Transaksi transaksi : transaksis) {
-            Anggota anggota = transaksi.getNikAnggota();
-            AnggotaReq anggotaReq = new AnggotaReq(anggota);
-            TransaksiReq transaksiReq = new TransaksiReq(transaksi);
-            transaksiReq.setAnggotaReq(anggotaReq);
-            transaksiReqs.add(transaksiReq);
-        }
-        return transaksiReqs;
+        Anggota anggota = anggotaRepository.findByNik(nik);
+        List<Transaksi> transaksis = anggota.getTList();
+        List<TransaksiReq> transaksisRespist = new ArrayList<>();
+        transaksis.forEach(data -> {
+            TransaksiReq transaksiReq = new TransaksiReq(data);
+            transaksisRespist.add(transaksiReq);
+        });
+        return transaksisRespist;
     }
 
     private Map<String, String> getDateHourNow() {
