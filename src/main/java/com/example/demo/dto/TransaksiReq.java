@@ -24,7 +24,6 @@ public class TransaksiReq {
         this.noTrans = transaksi.getNoTrans();
         this.amount = String.valueOf(transaksi.getAmount());
         this.action = transaksi.getAction();
-        this.createdAt = transaksi.getCreatedAt();
     }
 
     public String getNoTrans() {
