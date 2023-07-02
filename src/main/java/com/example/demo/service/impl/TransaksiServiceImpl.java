@@ -62,6 +62,7 @@ public class TransaksiServiceImpl implements TransaksiService {
             transaksiReq.setNoTrans(transactionNo);
             Transaksi transaksi = new Transaksi(transaksiReq);
             transaksi.setNikAnggota(anggota);
+            transaksi.setCreatedAt(new Date());
             transaksiRepository.save(transaksi);
         } catch (Exception e) {
             return "error-" + e.getMessage();
@@ -76,12 +77,18 @@ public class TransaksiServiceImpl implements TransaksiService {
     }
 
     @Override
-    public List<TransaksiReq> getTransactionByDate(String dateBefore, String dateAfter) {
+    public List<TransaksiReq> getTransactionByDate(String dateBefore, String dateAfter, String nik) {
         Date dateStart = this.convertStringToDate(dateBefore, 0, 0, 0);
         Date dateEnd = this.convertStringToDate(dateAfter, 23, 59, 59);
-        // return getListTransactionForReq(transaksiRepository.findBycreatedAtBetween(dateStart, dateEnd));
-        List<TransaksiReq> transaksiReqs = new ArrayList<>();
-        return transaksiReqs;
+        List<Transaksi> transaksiList = transaksiRepository.findBycreatedAtBetweenAndNik_anggota(dateStart, dateEnd, nik);
+        List<TransaksiReq> transaksisRespist = new ArrayList<>();
+        transaksiList.forEach(data -> {
+            TransaksiReq transaksiReq = new TransaksiReq(data);
+            transaksiReq.setCreatedAt(data.getCreatedAt());
+            transaksisRespist.add(transaksiReq);
+        });
+
+        return transaksisRespist;
     }
 
     @Override

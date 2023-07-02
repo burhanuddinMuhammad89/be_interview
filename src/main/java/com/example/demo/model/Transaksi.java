@@ -27,7 +27,7 @@ public class Transaksi {
     private BigDecimal amount;
     @Column(name = "action", columnDefinition = "varchar(10)")
     private String action;
-    @Column(name = "createdAt", columnDefinition = "TIMESTAMP")
+    @Column(name = "created_at", columnDefinition = "TIMESTAMP")
     private Date createdAt;
     @ManyToOne(cascade = CascadeType.ALL, fetch=FetchType.LAZY)
     @JoinColumn(name = "nik_anggota", referencedColumnName = "nik")
@@ -39,7 +39,6 @@ public class Transaksi {
         this.noTrans = transaksiReq.getNoTrans();
         this.amount = new BigDecimal(transaksiReq.getAmount()).abs();
         this.action = transaksiReq.getAction();
-        this.createdAt = new Date();
     }
     
     public long getId() {
