@@ -15,7 +15,6 @@ import org.apache.commons.lang3.StringUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-import com.example.demo.dto.AnggotaReq;
 import com.example.demo.dto.TransaksiReq;
 import com.example.demo.model.Anggota;
 import com.example.demo.model.Transaksi;
